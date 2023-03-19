@@ -1,0 +1,9 @@
+.header {
+  width: 1000px;
+  background-color: blanchedalmond;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+

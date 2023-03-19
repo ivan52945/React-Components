@@ -1,0 +1,13 @@
+.nav {
+  display: flex;
+  column-gap: 15px;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+}
+
+.link .active {
+  color: rgb(61, 56, 56);
+}
