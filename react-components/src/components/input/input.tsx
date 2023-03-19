@@ -39,6 +39,7 @@ class Input extends Component<InputType, inputState> {
   render() {
     return (
       <input
+        role="card-search-input"
         type="text"
         className="input"
         placeholder="Input some text"
