@@ -1,0 +1,11 @@
+.input {
+    height: 16px;
+    width: 150px;
+
+    padding: 2px 4px;
+
+    border-radius: 8px;
+    border: 2px solid rgb(128, 0, 107);
+
+    color: green;
+}
