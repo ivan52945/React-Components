@@ -1,5 +1,8 @@
 .footer {
+  max-width: 1000px;
   width: 100%;
+
+  flex: 1 1 auto;
   height: 40px;
 
   background-color: rgb(65, 60, 60);

@@ -1,9 +1,10 @@
 .header {
-  width: 1000px;
+  max-width: 1000px;
+  width: 100%;
+
   background-color: blanchedalmond;
 
   display: flex;
   align-items: center;
   justify-content: space-around;
 }
-

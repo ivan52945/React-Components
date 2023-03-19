@@ -1,4 +1,7 @@
 .main {
+    max-width: 1000px;
+    width: 100%;
+
     flex: 1 1 auto;
 
     padding: 30px;
