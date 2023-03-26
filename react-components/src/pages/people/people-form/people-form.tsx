@@ -3,31 +3,38 @@ import styles from './people-form.module.css';
 
 import PeopleButton from './people-button/people-button';
 
-type people = {
-  name: string;
-  male: boolean;
-  married: boolean;
-};
+import IPeople from '../../../types/people';
 
-class PeopleForm extends Component {
+type add = { add: (people: IPeople) => void };
+
+class PeopleForm extends Component<add> {
+  addingCallBack: (people: IPeople) => void;
+
   nameRef = React.createRef<HTMLInputElement>();
   maleRef = React.createRef<HTMLInputElement>();
   femaleRef = React.createRef<HTMLInputElement>();
   mariedRef = React.createRef<HTMLInputElement>();
+  imgRef = React.createRef<HTMLInputElement>();
 
-  constructor(props: never) {
+  imageSRC = '';
+
+  constructor(props: add) {
     super(props);
 
+    this.addingCallBack = props.add;
+
     this.submitPerson = this.submitPerson.bind(this);
+    this.addImage = this.addImage.bind(this);
   }
 
   submitPerson(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const result: people = {
+    const result: IPeople = {
       name: (this.nameRef.current as HTMLInputElement).value,
       male: (this.maleRef.current as HTMLInputElement).checked,
-      married: (this.mariedRef.current as HTMLInputElement).checked,
+      maried: (this.mariedRef.current as HTMLInputElement).checked,
+      img: this.imageSRC,
     };
 
     const name = result.name;
@@ -38,9 +45,24 @@ class PeopleForm extends Component {
     } else if (result.male == this.femaleRef.current?.checked) {
       console.log('Выберите пол');
       return;
+    } else if (!result.img) {
+      console.log('Дождитесь загрузки изображения');
     } else {
-      console.log(result);
+      this.addingCallBack(result);
     }
+
+    (this.nameRef.current as HTMLInputElement).value = '';
+  }
+
+  addImage() {
+    const file = (this.imgRef.current as HTMLInputElement).files as FileList;
+
+    const image = new FileReader();
+
+    image.onload = () => {
+      this.imageSRC = image.result as string;
+    };
+    image.readAsDataURL(file[0]);
   }
 
   render() {
@@ -72,7 +94,12 @@ class PeopleForm extends Component {
         </section>
         <section>
           Avatar:
-          <input type="file"></input>
+          <input
+            type="file"
+            accept=".png, .jpg, .jpeg"
+            ref={this.imgRef}
+            onChange={this.addImage}
+          ></input>
         </section>
         <PeopleButton label={'Submit'}></PeopleButton>
       </form>
