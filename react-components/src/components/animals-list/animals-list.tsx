@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import styles from './card-list.module.css';
+import styles from './animals-list.module.css';
 
 interface card {
   name: string;
@@ -16,7 +16,7 @@ class CardList extends Component<cards, cards> {
   constructor(props: cards) {
     super(props);
 
-    this.state = Object.assign({}, props);
+    this.state = { cards: props.cards };
   }
 
   render() {

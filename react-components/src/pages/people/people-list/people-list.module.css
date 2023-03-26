@@ -1,0 +1,34 @@
+.cards {
+  padding-top: 15px;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  column-gap: 10px;
+  row-gap: 10px;
+}
+
+.card {
+  width: 240px;
+  height: 12em;
+
+  overflow: hidden;
+
+  border: 1px solid black;
+  border-radius: 8px;
+
+  padding: 6px;
+}
+
+.name {
+  text-align: center;
+
+  line-height: 1.4;
+}
+
+.item {
+  margin-left: 7px;
+
+  line-height: 1.2;
+}
