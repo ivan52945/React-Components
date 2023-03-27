@@ -14,6 +14,9 @@ class Nav extends Component {
         <NavLink to="/about" className={nav.link}>
           About
         </NavLink>
+        <NavLink to="/people" className={nav.link}>
+          People
+        </NavLink>
         <NavLink to="/" className={nav.link}>
           Animals
         </NavLink>

@@ -2,7 +2,7 @@ import React from 'react';
 import { screen, render } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 
-import CardList from '../components/card-list/card-list';
+import CardList from '../components/animals-list/animals-list';
 
 describe('testing cards list', () => {
   test('test cards from json', () => {

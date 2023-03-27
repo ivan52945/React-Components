@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 
+import Section from '../../components/UI/section/section';
+
 import Input from '../../components/input/input';
-import CardList from '../../components/card-list/card-list';
+import CardList from '../../components/animals-list/animals-list';
 
 import animals from '../../assets/animals';
 
@@ -14,11 +16,10 @@ class Animals extends Component {
 
   render() {
     return (
-      <>
-        <h2 className="title">Animals</h2>
+      <Section name="Animals">
         <Input></Input>
         <CardList cards={animals}></CardList>
-      </>
+      </Section>
     );
   }
 }
