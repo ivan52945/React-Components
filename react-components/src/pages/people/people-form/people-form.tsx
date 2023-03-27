@@ -7,7 +7,16 @@ import IPeople from '../../../types/people';
 
 type add = { add: (people: IPeople) => void };
 
-class PeopleForm extends Component<add> {
+type peopleCheck = {
+  people: {
+    name: boolean;
+    sex: boolean;
+    img: boolean;
+    checked: boolean;
+  };
+};
+
+class PeopleForm extends Component<add, peopleCheck> {
   addingCallBack: (people: IPeople) => void;
 
   nameRef = React.createRef<HTMLInputElement>();
@@ -20,6 +29,15 @@ class PeopleForm extends Component<add> {
 
   constructor(props: add) {
     super(props);
+
+    this.state = {
+      people: {
+        name: true,
+        sex: true,
+        img: true,
+        checked: false,
+      },
+    };
 
     this.addingCallBack = props.add;
 
@@ -37,21 +55,27 @@ class PeopleForm extends Component<add> {
       img: this.imageSRC,
     };
 
+    const check = {
+      name: true,
+      sex: true,
+      img: true,
+      checked: false,
+    };
+
     const name = result.name;
 
     if (name.length <= 0 || !/^[A-ZА-Я][a-zа-я]+$/.test(name)) {
-      console.log('Не введено имя или не с большой буквы');
-      return;
+      check.name = false;
     } else if (result.male == this.femaleRef.current?.checked) {
-      console.log('Выберите пол');
-      return;
+      check.sex = false;
     } else if (!result.img) {
-      console.log('Дождитесь загрузки изображения');
+      check.img = false;
     } else {
+      check.checked = true;
       this.addingCallBack(result);
+      (this.nameRef.current as HTMLInputElement).value = '';
     }
-
-    (this.nameRef.current as HTMLInputElement).value = '';
+    this.setState({ people: check });
   }
 
   addImage() {
@@ -77,6 +101,7 @@ class PeopleForm extends Component<add> {
             ref={this.nameRef}
           ></input>
         </label>
+        {!this.state.people.name ? 'Неправильное имя' : ''}
         <section>
           Sex:
           <label>
@@ -87,6 +112,7 @@ class PeopleForm extends Component<add> {
             Female:
             <input type="radio" name="sex" value="female" ref={this.femaleRef} />
           </label>
+          {!this.state.people.sex ? 'Выберите пол' : ''}
         </section>
         <section>
           Maried:
@@ -100,8 +126,10 @@ class PeopleForm extends Component<add> {
             ref={this.imgRef}
             onChange={this.addImage}
           ></input>
+          {!this.state.people.img ? 'Выберите файл или дождитесь загрузки' : ''}
         </section>
         <PeopleButton label={'Submit'}></PeopleButton>
+        {this.state.people.checked ? 'Валидация прошла успешно' : ''}
       </form>
     );
   }
