@@ -11,7 +11,7 @@ interface ICard extends IPeople {
 }
 
 type cards = { cards: ICard[] };
-class People extends Component<Record<string, never>, cards> {
+class Peoples extends Component<Record<string, never>, cards> {
   constructor(props: Record<string, never>) {
     super(props);
 
@@ -40,4 +40,4 @@ class People extends Component<Record<string, never>, cards> {
   }
 }
 
-export default People;
+export default Peoples;

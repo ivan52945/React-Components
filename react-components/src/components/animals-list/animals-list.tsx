@@ -1,37 +1,20 @@
-import React, { Component } from 'react';
+import React, { FC } from 'react';
 
 import styles from './animals-list.module.css';
 
-interface card {
-  name: string;
-  species: string;
-  //image: string;
-  description: string;
-  id: number;
-}
+import IAnimal from '../../types/animal';
+import Animal from './aminal/animal';
 
-type cards = { cards: card[] };
+type cardList = { cards: IAnimal[] };
 
-class CardList extends Component<cards, cards> {
-  constructor(props: cards) {
-    super(props);
+const AnimalList: FC<cardList> = ({ cards }) => {
+  return (
+    <div className={styles.cards}>
+      {cards.map((card) => (
+        <Animal card={card} key={card.id} />
+      ))}
+    </div>
+  );
+};
 
-    this.state = { cards: props.cards };
-  }
-
-  render() {
-    return <div className={styles.cards}>{this.state.cards.map((card) => this.getCard(card))}</div>;
-  }
-
-  getCard(card: card) {
-    return (
-      <article className={styles.card} key={card.id}>
-        <h4 className={styles.name}>{card.name}</h4>
-        <p className={styles.subtext}>{card.species}</p>
-        <p className={styles.description}>{card.description}</p>
-      </article>
-    );
-  }
-}
-
-export default CardList;
+export default AnimalList;
