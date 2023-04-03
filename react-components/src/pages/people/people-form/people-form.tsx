@@ -9,9 +9,11 @@ interface ICard extends IPeople {
 
 interface IFormOut {
   name: string;
+  birthDate: string;
   sex: 'male' | 'female';
   maried: boolean;
   img: File[];
+  preferedAnimal: string;
 }
 
 type add = { add: (people: ICard) => void };
@@ -38,17 +40,21 @@ const PeopleForm: FC<add> = ({ add }) => {
   } = useForm<IFormOut>();
 
   const submit: SubmitHandler<IFormOut> = async (inputs) => {
+    console.log(inputs);
+
     const people: ICard = {
       name: inputs.name,
+      birthDate: inputs.birthDate,
       sex: inputs.sex as string,
       maried: inputs.maried,
       img: await fileReadPromise(inputs.img[0]),
       key: Date.now(),
+      preferedAnimal: inputs.preferedAnimal,
     };
 
-    add(people);
-
     reset();
+
+    add(people);
   };
 
   return (
@@ -74,6 +80,10 @@ const PeopleForm: FC<add> = ({ add }) => {
       </fieldset>
       {errors?.sex ? 'Выберите пол' : ''}
       <label>
+        Birth Date: <input type="date" {...register('birthDate', { required: true })} />
+      </label>
+      {errors?.birthDate ? 'Выберите дату рождения' : ''}
+      <label>
         Maried: <input type="checkbox" {...register('maried')} />
       </label>
       <section>
@@ -81,6 +91,11 @@ const PeopleForm: FC<add> = ({ add }) => {
         <input type="file" accept=".png, .jpg, .jpeg" {...register('img', { required: true })} />
         {errors?.img ? 'Загрузите аватар' : ''}
       </section>
+      <select {...register('preferedAnimal', { required: true })}>
+        <option value="Haski">Haski</option>
+        <option value="Buldog">Buldog</option>
+        <option value="Britan Cat">Britan Cat</option>
+      </select>
       <button>Submit</button>
     </form>
   );
