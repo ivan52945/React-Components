@@ -1,53 +1,42 @@
-import React, { Component } from 'react';
-import { InputType } from '../../types/input';
+import React, { FC, useEffect, useState, useRef } from 'react';
 import '../../styles/input.css';
 
-type inputState = {
-  value: string;
-};
+type outCallback = (value: string) => void;
 
-class Input extends Component<InputType, inputState> {
-  constructor(props: InputType) {
-    super(props);
-
-    this.state = {
-      value: this.load(),
-    };
-
-    this.input = this.input.bind(this);
-    this.save = this.save.bind(this);
-
-    window.onbeforeunload = this.save;
-  }
-
-  componentWillUnmount() {
-    this.save();
-  }
-
-  input(event: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({ value: event.currentTarget.value });
-  }
-
-  load() {
-    return localStorage.getItem('input') || '';
-  }
-
-  save() {
-    localStorage.setItem('input', this.state.value);
-  }
-
-  render() {
-    return (
-      <input
-        role="card-search-input"
-        type="text"
-        className="input"
-        placeholder="Input some text"
-        value={this.state.value}
-        onChange={this.input}
-      />
-    );
-  }
+interface IInputProps {
+  onchange?: outCallback;
 }
+
+const Input: FC<IInputProps> = (props) => {
+  const { onchange } = props;
+
+  const [value, setValue] = useState(localStorage.getItem('animals-search') || '');
+
+  const input = (event: React.ChangeEvent<HTMLInputElement>) => {
+    refValue.current = event.currentTarget.value;
+
+    setValue(event.currentTarget.value);
+    onchange?.(event.currentTarget.value);
+  };
+
+  const refValue = useRef<string>(value);
+
+  useEffect(() => {
+    return () => localStorage.setItem('animals-search', refValue.current);
+  }, []);
+
+  window.onbeforeunload = () => localStorage.setItem('animals-search', refValue.current);
+
+  return (
+    <input
+      role="card-search-input"
+      type="text"
+      className="input"
+      placeholder="Input some text"
+      value={value}
+      onChange={input}
+    />
+  );
+};
 
 export default Input;

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Section from '../../components/UI/section/section';
 
-import PeopleList from './people-list/peoplelist';
+import PeopleList from './people-list/people-list';
 import PeopleForm from './people-form/people-form';
 import IPeople from '../../types/people';
 
@@ -11,7 +11,7 @@ interface ICard extends IPeople {
 }
 
 type cards = { cards: ICard[] };
-class People extends Component<Record<string, never>, cards> {
+class Peoples extends Component<Record<string, never>, cards> {
   constructor(props: Record<string, never>) {
     super(props);
 
@@ -40,4 +40,4 @@ class People extends Component<Record<string, never>, cards> {
   }
 }
 
-export default People;
+export default Peoples;
