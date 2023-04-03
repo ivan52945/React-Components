@@ -1,6 +1,6 @@
 interface IPeople {
   name: string;
-  male: boolean;
+  sex: string;
   maried: boolean;
   img: string;
 }

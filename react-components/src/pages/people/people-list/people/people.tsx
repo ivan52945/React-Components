@@ -17,8 +17,8 @@ const People: FC<peopleProps> = ({ people }) => {
     <article className={styles.card}>
       <img src={people.img} alt="avatar" className={styles.img}></img>
       <h4 className={styles.name}>Name: {people.name}</h4>
-      <p className={styles.item}>Sex: {people.male ? 'Male' : 'Female'}</p>
-      <p className={styles.item}>Mariage: {people.maried ? 'Mariade' : 'No'}</p>
+      <p className={styles.item}>Sex: {people.sex}</p>
+      <p className={styles.item}>Maried: {people.maried ? 'Yes' : 'No'}</p>
     </article>
   );
 };

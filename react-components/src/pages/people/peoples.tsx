@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Section from '../../components/UI/section/section';
 
-import PeopleList from './people-list/peoplelist';
+import PeopleList from './people-list/people-list';
 import PeopleForm from './people-form/people-form';
 import IPeople from '../../types/people';
 

@@ -1,138 +1,89 @@
-import React, { Component, FormEvent } from 'react';
-import styles from './people-form.module.css';
-
-import PeopleButton from './people-button/people-button';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import React, { FC } from 'react';
 
 import IPeople from '../../../types/people';
 
-type add = { add: (people: IPeople) => void };
+interface ICard extends IPeople {
+  key: number;
+}
 
-type peopleCheck = {
-  people: {
-    name: boolean;
-    sex: boolean;
-    img: boolean;
-    checked: boolean;
-  };
-};
+interface IFormOut {
+  name: string;
+  sex: 'male' | 'female';
+  maried: boolean;
+  img: File[];
+}
 
-class PeopleForm extends Component<add, peopleCheck> {
-  addingCallBack: (people: IPeople) => void;
+type add = { add: (people: ICard) => void };
 
-  nameRef = React.createRef<HTMLInputElement>();
-  maleRef = React.createRef<HTMLInputElement>();
-  femaleRef = React.createRef<HTMLInputElement>();
-  mariedRef = React.createRef<HTMLInputElement>();
-  imgRef = React.createRef<HTMLInputElement>();
+import styles from './people-form.module.css';
 
-  imageSRC = '';
-
-  constructor(props: add) {
-    super(props);
-
-    this.state = {
-      people: {
-        name: true,
-        sex: true,
-        img: true,
-        checked: false,
-      },
-    };
-
-    this.addingCallBack = props.add;
-
-    this.submitPerson = this.submitPerson.bind(this);
-    this.addImage = this.addImage.bind(this);
-  }
-
-  submitPerson(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const result: IPeople = {
-      name: (this.nameRef.current as HTMLInputElement).value,
-      male: (this.maleRef.current as HTMLInputElement).checked,
-      maried: (this.mariedRef.current as HTMLInputElement).checked,
-      img: this.imageSRC,
-    };
-
-    const check = {
-      name: true,
-      sex: true,
-      img: true,
-      checked: false,
-    };
-
-    const name = result.name;
-
-    if (name.length <= 0 || !/^[A-ZА-Я][a-zа-я]+$/.test(name)) {
-      check.name = false;
-    } else if (result.male == this.femaleRef.current?.checked) {
-      check.sex = false;
-    } else if (!result.img) {
-      check.img = false;
-    } else {
-      check.checked = true;
-      this.addingCallBack(result);
-      (this.nameRef.current as HTMLInputElement).value = '';
-    }
-    this.setState({ people: check });
-  }
-
-  addImage() {
-    const file = (this.imgRef.current as HTMLInputElement).files as FileList;
-
+const fileReadPromise = (file: File) =>
+  new Promise<string>((resolve) => {
     const image = new FileReader();
 
     image.onload = () => {
-      this.imageSRC = image.result as string;
+      resolve(image.result as string);
     };
-    image.readAsDataURL(file[0]);
-  }
 
-  render() {
-    return (
-      <form onSubmit={this.submitPerson} className={styles.form}>
-        <label>
-          Name:
-          <input
-            type="text"
-            name="name"
-            placeholder={`Please input name`}
-            ref={this.nameRef}
-          ></input>
-        </label>
-        {!this.state.people.name ? 'Неправильное имя' : ''}
-        <section>
-          Sex:
-          <label>
-            Male:
-            <input type="radio" name="sex" value="male" ref={this.maleRef} />
-          </label>
-          <label>
-            Female:
-            <input type="radio" name="sex" value="female" ref={this.femaleRef} />
-          </label>
-          {!this.state.people.sex ? 'Выберите пол' : ''}
-        </section>
-        <section>
-          Maried:
-          <input type="checkbox" ref={this.mariedRef}></input>
-        </section>
-        <section>
-          Avatar:
-          <input
-            type="file"
-            accept=".png, .jpg, .jpeg"
-            ref={this.imgRef}
-            onChange={this.addImage}
-          ></input>
-          {!this.state.people.img ? 'Выберите файл или дождитесь загрузки' : ''}
-        </section>
-        <PeopleButton label={'Submit'}></PeopleButton>
-        {this.state.people.checked ? 'Валидация прошла успешно' : ''}
-      </form>
-    );
-  }
-}
+    image.readAsDataURL(file);
+  });
+
+const PeopleForm: FC<add> = ({ add }) => {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    reset,
+  } = useForm<IFormOut>();
+
+  const submit: SubmitHandler<IFormOut> = async (inputs) => {
+    const people: ICard = {
+      name: inputs.name,
+      sex: inputs.sex as string,
+      maried: inputs.maried,
+      img: await fileReadPromise(inputs.img[0]),
+      key: Date.now(),
+    };
+
+    add(people);
+
+    reset();
+  };
+
+  return (
+    <form onSubmit={handleSubmit(submit)} className={styles.form}>
+      <label>
+        Name:
+        <input
+          {...register('name', {
+            required: true,
+            pattern: {
+              value: /^[A-ZА-Я][a-zа-я]{2,}$/,
+              message:
+                'Имя должно начинаться с большой буквы и его длинна должна быть больше 2-х символов',
+            },
+          })}
+        />
+      </label>
+      {(errors?.name && errors.name.message) || ''}
+      <fieldset>
+        <legend>Sex</legend>
+        <input type="radio" {...register('sex', { required: true })} value="male" />
+        <input type="radio" {...register('sex', { required: true })} value="female" />
+      </fieldset>
+      {errors?.sex ? 'Выберите пол' : ''}
+      <label>
+        Maried: <input type="checkbox" {...register('maried')} />
+      </label>
+      <section>
+        Avatar:
+        <input type="file" accept=".png, .jpg, .jpeg" {...register('img', { required: true })} />
+        {errors?.img ? 'Загрузите аватар' : ''}
+      </section>
+      <button>Submit</button>
+    </form>
+  );
+};
 
 export default PeopleForm;
