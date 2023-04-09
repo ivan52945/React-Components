@@ -7,20 +7,19 @@ import { getChar } from '../../../API/API';
 
 type propsType = { id: number; disable: () => void };
 
-const empty = {
+const empty: IChar = {
   id: -1,
   name: '',
   species: '',
   type: '',
   gender: '',
   image: '',
+  status: '',
   origin: { name: '', url: '' },
   location: { name: '', url: '' },
 };
 
 const CharModale: FC<propsType> = ({ id, disable }) => {
-  console.log('modale');
-
   const [char, setChar] = useState<IChar>(empty);
 
   const updateChar = async () => {

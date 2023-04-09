@@ -5,6 +5,7 @@ interface IChar {
   type: string;
   gender: string;
   image: string;
+  status: string;
   origin: {
     name: string;
     url: string;
@@ -13,6 +14,9 @@ interface IChar {
     name: string;
     url: string;
   };
+  episode?: string[];
+  url?: string;
+  created?: string;
 }
 
 export default IChar;

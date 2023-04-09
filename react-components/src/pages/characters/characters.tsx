@@ -4,14 +4,13 @@ import React, { FC, useEffect, useState } from 'react';
 import Section from '../../components/UI/section/section';
 import styles from './characters.module.css';
 
-import Input from '../../components/input/input';
-import CharLisr from '../../components/char-list/char-list';
-
-//import animalsMock from '../../assets/animals';
 import IChar from '../../types/char';
-import { getChars } from '../../API/API';
 import { RequestError } from '../../types/errors';
+import { getChars } from '../../API/API';
+
+import Search from './searc/search';
 import CharModale from './char-modale/char-modale';
+import CharList from './char-list/char-list';
 
 const enum statusList {
   loading,
@@ -21,13 +20,11 @@ const enum statusList {
 const Animals: FC = () => {
   const characters: IChar[] = [];
 
-  let search = localStorage.getItem('chars-search') || '';
-
   const [charOut, setChars] = useState<IChar[]>(characters);
 
   const [status, setStatus] = useState<statusList>(statusList.loading);
 
-  const [modale, setModale] = useState(5);
+  const [modale, setModale] = useState(-1);
 
   const disableModal = () => {
     setModale(-1);
@@ -37,18 +34,14 @@ const Animals: FC = () => {
     setModale(id);
   };
 
-  const searchInput = (input: string) => {
-    search = input;
-  };
-
   useEffect(() => {
-    searchChars();
+    searchChars(localStorage.getItem('chars-search') || '');
   }, []);
 
-  const searchChars = async () => {
+  const searchChars = async (name: string) => {
     try {
       setStatus(statusList.loading);
-      const chars = await getChars(search);
+      const chars = await getChars(name);
       setChars(chars);
     } catch (error: unknown) {
       if (error instanceof RequestError) {
@@ -63,13 +56,11 @@ const Animals: FC = () => {
 
   return (
     <Section name="Animals">
-      <section className={styles.search}>
-        <Input onchange={searchInput}></Input>
-        <button onClick={searchChars}>Find</button>
+      <Search submit={searchChars}>
         {status == statusList.loading ? <p className={styles.legend}>Loading...</p> : ''}
-      </section>
+      </Search>
 
-      <CharLisr cards={charOut} details={enableModal} />
+      <CharList cards={charOut} details={enableModal} />
       {modale !== -1 ? <CharModale id={modale} disable={disableModal} /> : ''}
     </Section>
   );
