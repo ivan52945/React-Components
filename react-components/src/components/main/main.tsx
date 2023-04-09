@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import common from './main.module.css';
 
 import About from '../../pages/about/about';
-import Animals from '../../pages/animals/animals';
+import Animals from '../../pages/characters/characters';
 import NotFound from '../../pages/error/not-found';
 import Peoples from '../../pages/people/peoples';
 

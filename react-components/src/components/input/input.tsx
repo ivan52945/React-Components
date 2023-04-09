@@ -10,7 +10,7 @@ interface IInputProps {
 const Input: FC<IInputProps> = (props) => {
   const { onchange } = props;
 
-  const [value, setValue] = useState(localStorage.getItem('animals-search') || '');
+  const [value, setValue] = useState(localStorage.getItem('chars-search') || '');
 
   const input = (event: React.ChangeEvent<HTMLInputElement>) => {
     refValue.current = event.currentTarget.value;
@@ -22,10 +22,10 @@ const Input: FC<IInputProps> = (props) => {
   const refValue = useRef<string>(value);
 
   useEffect(() => {
-    return () => localStorage.setItem('animals-search', refValue.current);
+    return () => localStorage.setItem('chars-search', refValue.current);
   }, []);
 
-  window.onbeforeunload = () => localStorage.setItem('animals-search', refValue.current);
+  window.onbeforeunload = () => localStorage.setItem('chars-search', refValue.current);
 
   return (
     <input
