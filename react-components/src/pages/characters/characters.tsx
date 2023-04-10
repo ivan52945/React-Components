@@ -34,10 +34,6 @@ const Animals: FC = () => {
     setModale(id);
   };
 
-  useEffect(() => {
-    searchChars(localStorage.getItem('chars-search') || '');
-  }, []);
-
   const searchChars = async (name: string) => {
     try {
       setStatus(statusList.loading);
@@ -56,7 +52,7 @@ const Animals: FC = () => {
 
   return (
     <Section name="Animals">
-      <Search submit={searchChars}>
+      <Search submitCallback={searchChars}>
         {status == statusList.loading ? <p className={styles.legend}>Loading...</p> : ''}
       </Search>
 

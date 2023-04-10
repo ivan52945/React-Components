@@ -7,14 +7,14 @@ import Search from './search';
 
 describe('card search testings', () => {
   test('test input rended', () => {
-    render(<Search submit={() => {}} />);
+    render(<Search submitCallback={() => {}} />);
 
     const input = screen.getByRole<HTMLInputElement>('card-search-input');
 
     expect(input).toBeInTheDocument();
   });
   test('test button rended', () => {
-    render(<Search submit={() => {}} />);
+    render(<Search submitCallback={() => {}} />);
 
     const button = screen.getByRole<HTMLInputElement>('card-search-button');
 
@@ -23,17 +23,19 @@ describe('card search testings', () => {
   test('test saving of inputs value', async () => {
     const testValue = `${Math.random()}`;
 
-    const { unmount } = render(<Search submit={() => {}} />);
+    const { unmount } = render(<Search submitCallback={() => {}} />);
 
     const input = screen.getByRole<HTMLInputElement>('card-search-input');
+    const button = screen.getByRole<HTMLInputElement>('card-search-button');
 
     await userEvent.type(input, testValue);
+    await userEvent.click(button);
 
     unmount();
 
     expect(localStorage.getItem('chars-search')).toBe(testValue);
 
-    render(<Search submit={() => {}} />);
+    render(<Search submitCallback={() => {}} />);
 
     const inputNew = screen.getByRole<HTMLInputElement>('card-search-input');
 
@@ -46,18 +48,15 @@ describe('card search testings', () => {
 
     const check = (value: string) => (spy = value);
 
-    render(<Search submit={check} />);
+    render(<Search submitCallback={check} />);
 
     const input = screen.getByRole<HTMLInputElement>('card-search-input');
-
     const button = screen.getByRole<HTMLInputElement>('card-search-button');
 
     await userEvent.type(input, testValue);
-
     expect(input.value).toBe(testValue);
 
     await userEvent.click(button);
-
     expect(spy).toBe(testValue);
   });
 });

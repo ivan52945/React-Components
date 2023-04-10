@@ -4,11 +4,11 @@ import styles from './search.module.css';
 type outCallback = (value: string) => void;
 
 interface IInputProps {
-  submit: outCallback;
+  submitCallback: outCallback;
   children?: ReactChild | ReactNode;
 }
 
-const Search: FC<IInputProps> = ({ submit, children }) => {
+const Search: FC<IInputProps> = ({ submitCallback, children }) => {
   const [value, setValue] = useState(localStorage.getItem('chars-search') || '');
 
   const input = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,10 +20,13 @@ const Search: FC<IInputProps> = ({ submit, children }) => {
   const refValue = useRef<string>(value);
 
   useEffect(() => {
-    return () => localStorage.setItem('chars-search', refValue.current);
+    submitCallback(value);
   }, []);
 
-  window.onbeforeunload = () => localStorage.setItem('chars-search', refValue.current);
+  const submit = () => {
+    localStorage.setItem('chars-search', value);
+    submitCallback(value);
+  };
 
   return (
     <section className={styles.search}>
@@ -35,7 +38,7 @@ const Search: FC<IInputProps> = ({ submit, children }) => {
         value={value}
         onChange={input}
       />
-      <button onClick={() => submit(refValue.current)} role="card-search-button">
+      <button onClick={submit} role="card-search-button">
         Find
       </button>
       {children}
