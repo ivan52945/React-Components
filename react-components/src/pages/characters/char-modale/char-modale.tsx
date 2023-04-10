@@ -9,23 +9,29 @@ type propsType = { id: number; disable: () => void };
 
 const empty: IChar = {
   id: -1,
-  name: '',
-  species: '',
-  type: '',
-  gender: '',
+  name: 'Unknown',
+  species: 'Unknown',
+  type: 'Unknown',
+  gender: 'Unknown',
   image: '',
-  status: '',
-  origin: { name: '', url: '' },
-  location: { name: '', url: '' },
+  status: 'Unknown',
+  origin: { name: 'Unknown', url: 'Unknown' },
+  location: { name: 'Unknown', url: 'Unknown' },
 };
+
+const unknown: IChar = Object.assign({}, empty);
+unknown.id = 0;
 
 const CharModale: FC<propsType> = ({ id, disable }) => {
   const [char, setChar] = useState<IChar>(empty);
 
   const updateChar = async () => {
-    const result = await getChar(id);
-
-    setChar(result);
+    try {
+      const result = await getChar(id);
+      setChar(result);
+    } catch {
+      setChar(unknown);
+    }
   };
 
   useEffect(() => {
@@ -40,7 +46,7 @@ const CharModale: FC<propsType> = ({ id, disable }) => {
       }}
     >
       {char.id !== -1 ? (
-        <aside className={styles.char}>
+        <aside className={styles.char} role="char-modale">
           <h3>Name: {char.name}</h3>
           <img src={char.image} alt="char" className={styles.img} />
           <p>Gender: {char.gender}</p>

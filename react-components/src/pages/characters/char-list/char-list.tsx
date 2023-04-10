@@ -1,21 +1,36 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 
 import styles from './char-list.module.css';
 
-import Char from './char/char';
 import IChar from '../../../types/char';
 
-type cardList = { cards: IChar[]; details: (id: number) => void };
+import Char from './char/char';
+import CharModale from '../char-modale/char-modale';
 
-const CharList: FC<cardList> = ({ cards, details }) => {
+type cardList = { cards: IChar[] };
+
+const CharList: FC<cardList> = ({ cards }) => {
+  const [modale, setModale] = useState(-1);
+
+  const disableModal = () => {
+    setModale(-1);
+  };
+
+  const enableModal = (id: number) => {
+    setModale(id);
+  };
+
   return (
-    <div className={styles.cards} role="chars-list">
-      {cards.length > 0 ? (
-        cards.map((card) => <Char card={card} key={card.id} details={details} />)
-      ) : (
-        <p>No results</p>
-      )}
-    </div>
+    <React.Fragment>
+      <div className={styles.cards} role="chars-list">
+        {cards.length > 0 ? (
+          cards.map((card) => <Char card={card} key={card.id} details={enableModal} />)
+        ) : (
+          <p>No results</p>
+        )}
+      </div>
+      {modale !== -1 ? <CharModale id={modale} disable={disableModal} /> : ''}
+    </React.Fragment>
   );
 };
 

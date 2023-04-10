@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 
 import Section from '../../components/UI/section/section';
 import styles from './characters.module.css';
@@ -9,7 +9,6 @@ import { RequestError } from '../../types/errors';
 import { getChars } from '../../API/API';
 
 import Search from './searc/search';
-import CharModale from './char-modale/char-modale';
 import CharList from './char-list/char-list';
 
 const enum statusList {
@@ -23,16 +22,6 @@ const Animals: FC = () => {
   const [charOut, setChars] = useState<IChar[]>(characters);
 
   const [status, setStatus] = useState<statusList>(statusList.loading);
-
-  const [modale, setModale] = useState(-1);
-
-  const disableModal = () => {
-    setModale(-1);
-  };
-
-  const enableModal = (id: number) => {
-    setModale(id);
-  };
 
   const searchChars = async (name: string) => {
     try {
@@ -56,8 +45,7 @@ const Animals: FC = () => {
         {status == statusList.loading ? <p className={styles.legend}>Loading...</p> : ''}
       </Search>
 
-      <CharList cards={charOut} details={enableModal} />
-      {modale !== -1 ? <CharModale id={modale} disable={disableModal} /> : ''}
+      <CharList cards={charOut} />
     </Section>
   );
 };

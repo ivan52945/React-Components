@@ -19,14 +19,14 @@ const Search: FC<IInputProps> = ({ submitCallback, children }) => {
 
   const refValue = useRef<string>(value);
 
-  useEffect(() => {
-    submitCallback(value);
-  }, []);
-
   const submit = () => {
     localStorage.setItem('chars-search', value);
     submitCallback(value);
   };
+
+  useEffect(() => {
+    submitCallback(value);
+  }, []);
 
   return (
     <section className={styles.search}>
