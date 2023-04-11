@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { FC, useState } from 'react';
 
 import styles from './char-list.module.css';

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 
 import styles from './char.module.css';
 

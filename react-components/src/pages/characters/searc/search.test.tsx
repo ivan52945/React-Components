@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import { screen, render } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
