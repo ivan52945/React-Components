@@ -75,9 +75,18 @@ describe('test list with characters', () => {
 
     await userEvent.click(modaleOpen);
 
+    const modaleNotClear = screen.queryByRole<HTMLElement>(`char-modale`);
+
+    expect(modaleNotClear).toBeInTheDocument();
+
+    const modaleClearBackground = screen.getByRole<HTMLElement>(`char-modale-background`);
+
+    await userEvent.click(modaleClearBackground);
+
     const modaleClear = screen.queryByRole<HTMLElement>(`char-modale`);
 
     expect(modaleClear).not.toBeInTheDocument();
+    expect(modaleClearBackground).not.toBeInTheDocument();
   });
   test('test rendering of modale window with bad responce', async () => {
     render(<CharList cards={chars} />);

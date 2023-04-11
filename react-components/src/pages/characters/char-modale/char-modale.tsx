@@ -45,9 +45,16 @@ const CharModale: FC<propsType> = ({ id, disable }) => {
       onClick={() => {
         disable();
       }}
+      role="char-modale-background"
     >
       {char.id !== -1 ? (
-        <aside className={styles.char} role="char-modale">
+        <aside
+          className={styles.char}
+          role="char-modale"
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
           <h3>Name: {char.name}</h3>
           <img src={char.image} alt="char" className={styles.img} />
           <p>Gender: {char.gender}</p>
