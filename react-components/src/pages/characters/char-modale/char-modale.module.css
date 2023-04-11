@@ -1,0 +1,43 @@
+body.modal-show {
+  overflow: hidden;
+}
+
+.background {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding-top: 30%;
+
+  background-color: rgba(30, 30, 30, 0.4);
+}
+
+.char {
+  width: 500px;
+  height: 600px;
+
+  padding: 15px;
+  border-radius: 15px;
+
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+  justify-content: center;
+  align-items: center;
+
+  background-color: white;
+}
+
+.img {
+  object-fit: cover;
+  object-position: center;
+
+  border-radius: 15px;
+}

@@ -1,6 +1,6 @@
 .card {
   width: 240px;
-  height: 12em;
+  height: 18em;
 
   overflow: hidden;
 
@@ -16,6 +16,14 @@
 
 .subtext {
   margin-left: 7px;
+}
+
+.img {
+  width: 100%;
+  height: 12em;
+
+  object-fit: cover;
+  object-position: center;
 }
 
 .description {

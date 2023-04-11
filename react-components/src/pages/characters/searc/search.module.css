@@ -1,0 +1,21 @@
+.search {
+  position: relative;
+  left: 0;
+  top: 0;
+  padding-bottom: 24px;
+
+  display: flex;
+  column-gap: 5px;
+}
+
+.input {
+  height: 16px;
+  width: 150px;
+
+  padding: 2px 4px;
+
+  border-radius: 8px;
+  border: 2px solid rgb(128, 0, 107);
+
+  color: green;
+}
