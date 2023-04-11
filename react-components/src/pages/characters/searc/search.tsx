@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { FC, useEffect, useState, useRef, ReactChild, ReactNode } from 'react';
 import styles from './search.module.css';
 
