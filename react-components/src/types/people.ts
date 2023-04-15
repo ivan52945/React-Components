@@ -5,6 +5,7 @@ interface IPeople {
   maried: boolean;
   img: string;
   preferedAnimal: string;
+  key: number;
 }
 
 export default IPeople;

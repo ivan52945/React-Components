@@ -1,43 +1,15 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
+import { useGetCharQuery } from '../../../API/API.2';
 import styles from './char-modale.module.css';
 
 import IChar from '../../../types/char';
 
-import { getChar } from '../../../API/API';
-
 type propsType = { id: number; disable: () => void };
 
-const empty: IChar = {
-  id: -1,
-  name: 'Unknown',
-  species: 'Unknown',
-  type: 'Unknown',
-  gender: 'Unknown',
-  image: '',
-  status: 'Unknown',
-  origin: { name: 'Unknown', url: 'Unknown' },
-  location: { name: 'Unknown', url: 'Unknown' },
-};
-
-const unknown: IChar = Object.assign({}, empty);
-unknown.id = 0;
-
 const CharModale: FC<propsType> = ({ id, disable }) => {
-  const [char, setChar] = useState<IChar>(empty);
+  const { data, isLoading } = useGetCharQuery(id);
 
-  const updateChar = async () => {
-    try {
-      const result = await getChar(id);
-      setChar(result);
-    } catch {
-      setChar(unknown);
-    }
-  };
-
-  useEffect(() => {
-    updateChar();
-  }, []);
+  const char = data as IChar;
 
   return (
     <div
@@ -47,7 +19,7 @@ const CharModale: FC<propsType> = ({ id, disable }) => {
       }}
       role="char-modale-background"
     >
-      {char.id !== -1 ? (
+      {!isLoading ? (
         <aside
           className={styles.char}
           role="char-modale"

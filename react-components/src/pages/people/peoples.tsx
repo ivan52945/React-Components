@@ -1,43 +1,26 @@
-import React, { Component } from 'react';
+import React, { FC } from 'react';
+import { useAppDispatch } from '../../store/hook';
 
 import Section from '../../components/UI/section/section';
-
-import PeopleList from './people-list/people-list';
 import PeopleForm from './people-form/people-form';
+import PeopleList from './people-list/people-list';
+
 import IPeople from '../../types/people';
+import { add } from '../../store/people-slice';
 
-interface ICard extends IPeople {
-  key: number;
-}
+const Peoples: FC = () => {
+  const dispatch = useAppDispatch();
 
-type cards = { cards: ICard[] };
-class Peoples extends Component<Record<string, never>, cards> {
-  constructor(props: Record<string, never>) {
-    super(props);
+  const addPeople = (people: IPeople) => {
+    dispatch(add(people));
+  };
 
-    this.state = {
-      cards: [],
-    };
-
-    this.addPeople = this.addPeople.bind(this);
-  }
-
-  addPeople(people: IPeople) {
-    const card: ICard = Object.assign({ key: Date.now() }, people);
-
-    this.state.cards.push(card);
-
-    this.setState(this.state);
-  }
-
-  render() {
-    return (
-      <Section name="People">
-        <PeopleForm add={this.addPeople}></PeopleForm>
-        <PeopleList cards={this.state.cards}></PeopleList>
-      </Section>
-    );
-  }
-}
+  return (
+    <Section name="People">
+      <PeopleForm add={addPeople}></PeopleForm>
+      <PeopleList></PeopleList>
+    </Section>
+  );
+};
 
 export default Peoples;

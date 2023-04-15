@@ -1,33 +1,30 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { FC, useEffect, useState, useRef, ReactChild, ReactNode } from 'react';
+import React, { FC, ReactChild, ReactNode, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../store/hook';
+import { save } from '../../../store/char-slice';
 import styles from './search.module.css';
 
 type outCallback = (value: string) => void;
 
 interface IInputProps {
-  submitCallback: outCallback;
+  submitCallback?: outCallback;
   children?: ReactChild | ReactNode;
 }
 
 const Search: FC<IInputProps> = ({ submitCallback, children }) => {
-  const [value, setValue] = useState(localStorage.getItem('chars-search') || '');
+  const search = useAppSelector((state) => state.charsearc.value);
 
-  const input = (event: React.ChangeEvent<HTMLInputElement>) => {
-    refValue.current = event.currentTarget.value;
+  const [value, setValue] = useState(search);
 
-    setValue(event.currentTarget.value);
+  const input = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
   };
 
-  const refValue = useRef<string>(value);
+  const dispatch = useAppDispatch();
 
-  const submit = () => {
-    localStorage.setItem('chars-search', value);
-    submitCallback(value);
+  const submitValue = () => {
+    dispatch(save(value));
+    submitCallback?.(value);
   };
-
-  useEffect(() => {
-    submitCallback(value);
-  }, []);
 
   return (
     <section className={styles.search}>
@@ -39,7 +36,7 @@ const Search: FC<IInputProps> = ({ submitCallback, children }) => {
         value={value}
         onChange={input}
       />
-      <button onClick={submit} role="card-search-button">
+      <button onClick={submitValue} role="card-search-button">
         Find
       </button>
       {children}

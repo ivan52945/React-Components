@@ -1,23 +1,45 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { FC, useState } from 'react';
+import { useGetCharsQuery } from '../../API/API.2';
+import { useAppSelector } from '../../store/hook';
 
 import Section from '../../components/UI/section/section';
-import styles from './characters.module.css';
-
-import IChar from '../../types/char';
-import { RequestError } from '../../types/errors';
-import { getChars } from '../../API/API';
-
 import Search from './searc/search';
 import CharList from './char-list/char-list';
 
+import styles from './characters.module.css';
+
+const Animals: FC = () => {
+  const searchValue = useAppSelector((state) => state.charsearc.value);
+
+  const [name, setName] = useState(searchValue);
+
+  const { data, isLoading } = useGetCharsQuery(name);
+
+  const search = (value: string) => setName(value);
+
+  return (
+    <Section name="Characters">
+      <Search submitCallback={search}>
+        {isLoading ? <p className={styles.legend}>Loading...</p> : ''}
+      </Search>
+
+      <CharList cards={data?.results || []} />
+    </Section>
+  );
+};
+
+export default Animals;
+
+/*  
 const enum statusList {
   loading,
   complete,
 }
 
-const Animals: FC = () => {
-  const characters: IChar[] = [];
+
+
+const characters: IChar[] = [];
 
   const [charOut, setChars] = useState<IChar[]>(characters);
 
@@ -37,17 +59,4 @@ const Animals: FC = () => {
     } finally {
       setStatus(statusList.complete);
     }
-  };
-
-  return (
-    <Section name="Animals">
-      <Search submitCallback={searchChars}>
-        {status == statusList.loading ? <p className={styles.legend}>Loading...</p> : ''}
-      </Search>
-
-      <CharList cards={charOut} />
-    </Section>
-  );
-};
-
-export default Animals;
+  }; */

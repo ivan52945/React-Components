@@ -4,12 +4,8 @@ import styles from './people.module.css';
 
 import IPeople from '../../../../types/people';
 
-interface IPeopleCard extends IPeople {
-  key: number;
-}
-
 type peopleProps = {
-  people: IPeopleCard;
+  people: IPeople;
 };
 
 const People: FC<peopleProps> = ({ people }) => {

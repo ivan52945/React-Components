@@ -3,9 +3,7 @@ import React, { FC } from 'react';
 
 import IPeople from '../../../types/people';
 
-interface ICard extends IPeople {
-  key: number;
-}
+import styles from './people-form.module.css';
 
 interface IFormOut {
   name: string;
@@ -16,9 +14,9 @@ interface IFormOut {
   preferedAnimal: string;
 }
 
-type add = { add: (people: ICard) => void };
-
-import styles from './people-form.module.css';
+interface IPeopleForm {
+  add: (people: IPeople) => void;
+}
 
 const fileReadPromise = (file: File) =>
   new Promise<string>((resolve) => {
@@ -31,7 +29,7 @@ const fileReadPromise = (file: File) =>
     image.readAsDataURL(file);
   });
 
-const PeopleForm: FC<add> = ({ add }) => {
+const PeopleForm: FC<IPeopleForm> = ({ add }) => {
   const {
     register,
     formState: { errors },
@@ -40,9 +38,7 @@ const PeopleForm: FC<add> = ({ add }) => {
   } = useForm<IFormOut>();
 
   const submit: SubmitHandler<IFormOut> = async (inputs) => {
-    console.log(inputs);
-
-    const people: ICard = {
+    const people: IPeople = {
       name: inputs.name,
       birthDate: inputs.birthDate,
       sex: inputs.sex as string,
