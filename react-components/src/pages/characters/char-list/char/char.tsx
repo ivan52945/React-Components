@@ -8,15 +8,6 @@ import IChar from '../../../../types/char';
 type card = { card: IChar; details?: (id: number) => void };
 
 const Char: FC<card> = ({ card, details }) => {
-  /*
-  useEffect(() => {
-    console.log(`${card.id} mounted`);
-    return () => {
-      console.log(`${card.id} unmounted`);
-    };
-  }, []);
-   */
-
   return (
     <article className={styles.card} onClick={() => details?.(card.id)} role={`char-${card.id}`}>
       <h4 className={styles.name}>{card.name}</h4>
