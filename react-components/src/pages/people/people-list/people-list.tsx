@@ -10,7 +10,7 @@ type IPeopleListProps = { list: IPeople[] };
 
 const PeopleList: FC<IPeopleListProps> = ({ list }) => {
   return (
-    <div className={styles.cards}>
+    <div className={styles.cards} role="people-list">
       {list.map((people) => (
         <People people={people} key={people.key} />
       ))}

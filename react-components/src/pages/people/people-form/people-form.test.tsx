@@ -8,15 +8,6 @@ import { renderWithProviders } from '../../../tests/render-with-provider';
 import PeopleForm from './people-form';
 import IPeople from '../../../types/people';
 
-interface IFormOut {
-  name: string;
-  birthDate: string;
-  sex: 'male' | 'female';
-  maried: boolean;
-  img: File[];
-  preferedAnimal: string;
-}
-
 describe('test people form', () => {
   test('initial state', async () => {
     const checkList = [
