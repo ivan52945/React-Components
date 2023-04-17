@@ -4,14 +4,14 @@ import styles from './people-list.module.css';
 
 import People from './people/people';
 
-import { useAppSelector } from '../../../store/hook';
+import IPeople from '../../../types/people';
 
-const PeopleList: FC = () => {
-  const peoples = useAppSelector((state) => state.peoples.list);
+type IPeopleListProps = { list: IPeople[] };
 
+const PeopleList: FC<IPeopleListProps> = ({ list }) => {
   return (
     <div className={styles.cards}>
-      {peoples.map((people) => (
+      {list.map((people) => (
         <People people={people} key={people.key} />
       ))}
     </div>

@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useAppDispatch } from '../../store/hook';
+import { useAppDispatch, useAppSelector } from '../../store/hook';
 
 import Section from '../../components/UI/section/section';
 import PeopleForm from './people-form/people-form';
@@ -15,10 +15,12 @@ const Peoples: FC = () => {
     dispatch(add(people));
   };
 
+  const peoples = useAppSelector((state) => state.peoples.list);
+
   return (
     <Section name="People">
       <PeopleForm add={addPeople}></PeopleForm>
-      <PeopleList></PeopleList>
+      <PeopleList list={peoples}></PeopleList>
     </Section>
   );
 };

@@ -1,14 +1,14 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-type peopleState = {
+type charState = {
   value: string;
 };
 
-const initialState: peopleState = {
+const initialState: charState = {
   value: '',
 };
 
-const peopleSlice = createSlice({
+const charSlice = createSlice({
   name: 'charsearch',
   initialState: initialState,
   reducers: {
@@ -18,6 +18,6 @@ const peopleSlice = createSlice({
   },
 });
 
-export const { save } = peopleSlice.actions;
+export const { save } = charSlice.actions;
 
-export default peopleSlice.reducer;
+export default charSlice.reducer;

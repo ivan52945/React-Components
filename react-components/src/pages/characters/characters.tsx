@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { FC, useState } from 'react';
 import { useGetCharsQuery } from '../../API/API.2';
 import { useAppSelector } from '../../store/hook';
@@ -11,7 +10,7 @@ import CharList from './char-list/char-list';
 import styles from './characters.module.css';
 
 const Сhars: FC = () => {
-  const searchValue = useAppSelector((state) => state.charsearc.value);
+  const searchValue = useAppSelector((state) => state.chars.value);
 
   const [name, setName] = useState(searchValue);
 

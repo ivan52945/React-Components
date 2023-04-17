@@ -1,21 +1,25 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
-import { screen, render } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 import userEvent from '@testing-library/user-event';
 
 import Search from './search';
+import { renderWithProviders } from '../../../tests/render-with-provider';
+import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../../store/hook';
+import { configureStore } from '@reduxjs/toolkit';
 
 describe('card search testings', () => {
   test('test input rended', () => {
-    render(<Search submitCallback={() => {}} />);
+    renderWithProviders(<Search submitCallback={() => {}} />);
 
     const input = screen.getByRole<HTMLInputElement>('card-search-input');
 
     expect(input).toBeInTheDocument();
   });
   test('test button rended', () => {
-    render(<Search submitCallback={() => {}} />);
+    renderWithProviders(<Search submitCallback={() => {}} />);
 
     const button = screen.getByRole<HTMLInputElement>('card-search-button');
 
@@ -24,7 +28,7 @@ describe('card search testings', () => {
   test('test saving of inputs value', async () => {
     const testValue = `${Math.random()}`;
 
-    const { unmount } = render(<Search submitCallback={() => {}} />);
+    const { store, unmount } = renderWithProviders(<Search submitCallback={() => {}} />);
 
     const input = screen.getByRole<HTMLInputElement>('card-search-input');
     const button = screen.getByRole<HTMLInputElement>('card-search-button');
@@ -32,11 +36,13 @@ describe('card search testings', () => {
     await userEvent.type(input, testValue);
     await userEvent.click(button);
 
+    const storeOld = Object.assign({}, store);
+
     unmount();
 
-    expect(localStorage.getItem('chars-search')).toBe(testValue);
-
-    render(<Search submitCallback={() => {}} />);
+    renderWithProviders(<Search submitCallback={() => {}} />, {
+      store,
+    });
 
     const inputNew = screen.getByRole<HTMLInputElement>('card-search-input');
 
@@ -49,7 +55,7 @@ describe('card search testings', () => {
 
     const check = (value: string) => (spy = value);
 
-    render(<Search submitCallback={check} />);
+    renderWithProviders(<Search submitCallback={check} />);
 
     const input = screen.getByRole<HTMLInputElement>('card-search-input');
     const button = screen.getByRole<HTMLInputElement>('card-search-button');

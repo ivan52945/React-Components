@@ -11,7 +11,7 @@ interface IInputProps {
 }
 
 const Search: FC<IInputProps> = ({ submitCallback, children }) => {
-  const search = useAppSelector((state) => state.charsearc.value);
+  const search = useAppSelector((state) => state.chars.value);
 
   const [value, setValue] = useState(search);
 

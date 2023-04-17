@@ -7,6 +7,7 @@ import chars from '../../../tests/chars';
 import CharList from './char-list';
 
 import charServer from '../../../tests/chars-server';
+import { renderWithProviders } from '../../../tests/render-with-provider';
 
 beforeAll(() => charServer.listen());
 
@@ -59,37 +60,7 @@ describe('test list with characters', () => {
     expect(cards).toBeInTheDocument();
   });
   test('test rendering of modale window', async () => {
-    render(<CharList cards={chars} />);
-
-    const modaleClose = screen.queryByRole<HTMLElement>(`char-modale`);
-
-    expect(modaleClose).not.toBeInTheDocument();
-
-    const card = screen.getByRole<HTMLElement>(`char-1`);
-
-    await userEvent.click(card);
-
-    const modaleOpen = await screen.findByRole<HTMLElement>(`char-modale`);
-
-    expect(modaleOpen).toBeInTheDocument();
-
-    await userEvent.click(modaleOpen);
-
-    const modaleNotClear = screen.queryByRole<HTMLElement>(`char-modale`);
-
-    expect(modaleNotClear).toBeInTheDocument();
-
-    const modaleClearBackground = screen.getByRole<HTMLElement>(`char-modale-background`);
-
-    await userEvent.click(modaleClearBackground);
-
-    const modaleClear = screen.queryByRole<HTMLElement>(`char-modale`);
-
-    expect(modaleClear).not.toBeInTheDocument();
-    expect(modaleClearBackground).not.toBeInTheDocument();
-  });
-  test('test rendering of modale window with bad responce', async () => {
-    render(<CharList cards={chars} />);
+    renderWithProviders(<CharList cards={chars} />);
 
     const modaleClose = screen.queryByRole<HTMLElement>(`char-modale`);
 
