@@ -27,7 +27,7 @@ const Search: FC<IInputProps> = ({ submitCallback, children }) => {
   };
 
   return (
-    <section className={styles.search}>
+    <section className={styles.search} role="chars-search">
       <input
         role="card-search-input"
         type="text"

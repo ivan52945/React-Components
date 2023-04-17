@@ -16,8 +16,6 @@ const Сhars: FC = () => {
 
   const { data = { results: [] }, isLoading, error } = useGetCharsQuery(name);
 
-  console.log(isLoading);
-
   const search = (value: string) => setName(value);
 
   return (

@@ -1,7 +1,7 @@
 interface IAnimal {
   name: string;
   species: string;
-  //image: string;
+  image: string;
   description: string;
   id: number;
 }

@@ -54,7 +54,7 @@ const PeopleForm: FC<IPeopleForm> = ({ add }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(submit)} className={styles.form}>
+    <form onSubmit={handleSubmit(submit)} className={styles.form} role={'people-form'}>
       <label>
         Name:
         <input
@@ -66,25 +66,46 @@ const PeopleForm: FC<IPeopleForm> = ({ add }) => {
                 'Имя должно начинаться с большой буквы и его длинна должна быть больше 2-х символов',
             },
           })}
+          role="people-name-input"
         />
       </label>
-      {(errors?.name && errors.name.message) || ''}
-      <fieldset>
+      {errors?.name ? errors?.name?.message || (errors?.name && 'Введите имя') : ''}
+      <fieldset role="people-sex-radio">
         <legend>Sex</legend>
-        <input type="radio" {...register('sex', { required: true })} value="male" />
-        <input type="radio" {...register('sex', { required: true })} value="female" />
+        <input
+          type="radio"
+          {...register('sex', { required: true })}
+          value="male"
+          role="people-sex-radio-male"
+        />
+        <input
+          type="radio"
+          {...register('sex', { required: true })}
+          value="female"
+          role="people-sex-radio-female"
+        />
       </fieldset>
       {errors?.sex ? 'Выберите пол' : ''}
       <label>
-        Birth Date: <input type="date" {...register('birthDate', { required: true })} />
+        Birth Date:{' '}
+        <input
+          type="date"
+          {...register('birthDate', { required: true })}
+          role="people-birthday-date"
+        />
       </label>
       {errors?.birthDate ? 'Выберите дату рождения' : ''}
       <label>
-        Maried: <input type="checkbox" {...register('maried')} />
+        Maried: <input type="checkbox" {...register('maried')} role="people-married-check" />
       </label>
       <section>
         Avatar:
-        <input type="file" accept=".png, .jpg, .jpeg" {...register('img', { required: true })} />
+        <input
+          type="file"
+          accept=".png, .jpg, .jpeg"
+          {...register('img', { required: true })}
+          role="people-avatar"
+        />
         {errors?.img ? 'Загрузите аватар' : ''}
       </section>
       <select {...register('preferedAnimal', { required: true })}>
@@ -92,7 +113,7 @@ const PeopleForm: FC<IPeopleForm> = ({ add }) => {
         <option value="Buldog">Buldog</option>
         <option value="Britan Cat">Britan Cat</option>
       </select>
-      <button>Submit</button>
+      <button role="people-form-submit">Submit</button>
     </form>
   );
 };
