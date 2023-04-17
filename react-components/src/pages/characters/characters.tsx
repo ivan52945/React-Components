@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { useGetCharsQuery } from '../../API/API.2';
+import { useGetCharsQuery } from '../../API/API';
 import { useAppSelector } from '../../store/hook';
 import { Err } from '../../types/query';
 
@@ -14,7 +14,9 @@ const Сhars: FC = () => {
 
   const [name, setName] = useState(searchValue);
 
-  const { data, isLoading, error } = useGetCharsQuery(name);
+  const { data = { results: [] }, isLoading, error } = useGetCharsQuery(name);
+
+  console.log(isLoading);
 
   const search = (value: string) => setName(value);
 
@@ -24,7 +26,7 @@ const Сhars: FC = () => {
         {isLoading ? <p className={styles.legend}>Loading...</p> : ''}
       </Search>
       {!error || !((error as Err).status === '404') ? (
-        <CharList cards={data?.results || []} />
+        <CharList cards={data.results} />
       ) : (
         'Something wrong'
       )}

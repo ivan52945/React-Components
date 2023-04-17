@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import peopleReducer from './people-slice';
 import charReducer from './char-slice';
-import { charsAPI } from '../API/API.2';
+import { charsAPI } from '../API/API';
 
 const store = configureStore({
   reducer: {

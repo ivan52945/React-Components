@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 
 import charReducer from '../store/char-slice';
 import peopleReducer from '../store/people-slice';
-import { charsAPI } from '../API/API.2';
+import { charsAPI } from '../API/API';
 
 import type { RootState } from '../store/store';
 

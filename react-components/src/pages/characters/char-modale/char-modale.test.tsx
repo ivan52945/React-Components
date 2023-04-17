@@ -1,11 +1,9 @@
 import React from 'react';
-import { screen, render } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { renderWithProviders } from '../../../tests/render-with-provider';
 import CharModale from './char-modale';
-
-import chars from '../../../tests/chars';
 
 import charServer from '../../../tests/chars-server';
 

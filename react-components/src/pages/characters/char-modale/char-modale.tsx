@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useGetCharQuery } from '../../../API/API.2';
+import { useGetCharQuery } from '../../../API/API';
 import styles from './char-modale.module.css';
 
 import IChar from '../../../types/char';

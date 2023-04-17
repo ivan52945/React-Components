@@ -1,14 +1,11 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import { screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 import userEvent from '@testing-library/user-event';
 
-import Search from './search';
 import { renderWithProviders } from '../../../tests/render-with-provider';
-import { useSelector } from 'react-redux';
-import { useAppSelector } from '../../../store/hook';
-import { configureStore } from '@reduxjs/toolkit';
+
+import Search from './search';
 
 describe('card search testings', () => {
   test('test input rended', () => {
@@ -35,8 +32,6 @@ describe('card search testings', () => {
 
     await userEvent.type(input, testValue);
     await userEvent.click(button);
-
-    const storeOld = Object.assign({}, store);
 
     unmount();
 
