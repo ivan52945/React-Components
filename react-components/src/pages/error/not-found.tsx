@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Section from '../../components/UI/section/section';
 
 class NotFound extends Component {
   constructor(props: Record<string, never>) {
@@ -8,10 +9,9 @@ class NotFound extends Component {
 
   render() {
     return (
-      <>
-        <h2 className="title">Not Found</h2>
+      <Section name="Not Found">
         <Link to="/">To home page</Link>
-      </>
+      </Section>
     );
   }
 }

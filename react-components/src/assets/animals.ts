@@ -1,4 +1,4 @@
-const animals = [
+const animalsMock = [
   {
     id: 0,
     name: 'Tiger',
@@ -181,4 +181,4 @@ const animals = [
   },
 ];
 
-export default animals;
+export default animalsMock;

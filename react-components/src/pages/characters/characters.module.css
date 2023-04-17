@@ -1,0 +1,18 @@
+.search {
+  position: relative;
+  left: 0;
+  top: 0;
+  padding-bottom: 24px;
+
+  display: flex;
+  column-gap: 5px;
+}
+
+.legend {
+  position: absolute;
+  bottom: 0;
+
+  width: 100%;
+
+  text-align: center;
+}
