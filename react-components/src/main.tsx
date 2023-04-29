@@ -3,9 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import Header from './components/header/header';
-import Main from './components/main/main';
-import Footer from './components/footer/footer';
+import App from './app/app';
 
 import store from './store/store';
 
@@ -15,9 +13,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <Header></Header>
-        <Main></Main>
-        <Footer></Footer>
+        <App></App>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>

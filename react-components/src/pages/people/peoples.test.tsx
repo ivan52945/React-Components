@@ -6,7 +6,6 @@ import userEvent from '@testing-library/user-event';
 import { renderWithProviders } from '../../tests/render-with-provider';
 
 import Peoples from './peoples';
-import IPeople from '../../types/people';
 
 describe('test people page', () => {
   test('submit callback parameters', async () => {
@@ -43,7 +42,7 @@ describe('test people page', () => {
     expect(peopleList.children.length).toBe(1);
 
     fields.forEach((value) => {
-      expect(screen.getByText(new RegExp(value, 'gmi'))).toBeInTheDocument();
+      expect(screen.getAllByText(new RegExp(value, 'mi'))[0]).toBeInTheDocument();
     });
 
     unmount();
@@ -51,7 +50,7 @@ describe('test people page', () => {
     renderWithProviders(<Peoples />, { store });
 
     fields.forEach((value) => {
-      expect(screen.getAllByText(new RegExp(value, 'gmi'))[0]).toBeInTheDocument();
+      expect(screen.getAllByText(new RegExp(value, 'mi'))[0]).toBeInTheDocument();
     });
   });
 });
