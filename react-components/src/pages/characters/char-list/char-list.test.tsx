@@ -51,7 +51,7 @@ describe('test list with characters', () => {
   test('test rendering of container with empty list', () => {
     render(<CharList cards={[]} />);
 
-    const empty = screen.getByText<HTMLElement>(/No results/gim);
+    const empty = screen.getByText<HTMLElement>(/No results/im);
 
     expect(empty).toBeInTheDocument;
 

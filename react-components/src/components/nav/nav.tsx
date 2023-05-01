@@ -13,7 +13,7 @@ function Nav() {
         People
       </NavLink>
       <NavLink to="/" className={nav.link}>
-        Animals
+        Characters
       </NavLink>
     </nav>
   );

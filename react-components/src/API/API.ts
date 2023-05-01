@@ -22,3 +22,4 @@ export const charsAPI = createApi({
 });
 
 export const { useGetCharsQuery, useGetCharQuery } = charsAPI;
+export default charsAPI;
