@@ -1,8 +1,8 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore, PreloadedState } from '@reduxjs/toolkit';
 import peopleReducer from './people-slice';
 import charReducer from './char-slice';
 import { charsAPI } from '../API/API';
-
+/*
 const store = configureStore({
   reducer: {
     peoples: peopleReducer,
@@ -11,8 +11,23 @@ const store = configureStore({
   },
   middleware: (getGetDefaultMiddleware) => getGetDefaultMiddleware().concat(charsAPI.middleware),
 });
+*/
+const rootReducer = combineReducers({
+  peoples: peopleReducer,
+  chars: charReducer,
+  [charsAPI.reducerPath]: charsAPI.reducer,
+});
 
-export default store;
+export function setupStore(preloadedState?: PreloadedState<RootState>) {
+  return configureStore({
+    reducer: rootReducer,
+    preloadedState,
+    middleware: (getGetDefaultMiddleware) => getGetDefaultMiddleware().concat(charsAPI.middleware),
+  });
+}
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export default setupStore;
+
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppStore = ReturnType<typeof setupStore>;
+export type AppDispatch = AppStore['dispatch'];
